@@ -12,21 +12,21 @@ import (
 var GameStatus Status
 var GameSentence Sentence
 
-type Sentence struct {
-	LastResult string
-	LowOrHi    string
-	Candid     string
-	Life       string
+type Sentence struct { //gameで表示される分がまとめられている
+	LastResult string //状態を表す
+	LowOrHi    string //大きいか小さいかを表す
+	Candid     string //これまでの予想値を表す
+	Life       string //ライフを表す
 }
 
-type Status struct {
-	RandomNumber int
-	NumberOfLife int
-	LuckyNumber []int
-	UnluckyNumber []int
-	CandidSlice []string
-	Clear      bool
-	Gameover   bool
+type Status struct { //ゲームに必要なデータがまとめられている
+	RandomNumber  int //答え
+	NumberOfLife  int //ライフの数
+	LuckyNumber   []int //ラッキーナンバーのスライス
+	UnluckyNumber []int //アンラッキーナンバーのスライス
+	CandidSlice   []string //これまでの予想値のスライス
+	Clear         bool //クリアしたかどうかを示す
+	Gameover      bool //ゲームオーバーかどうか示す
 }
 
 func init() {
@@ -77,30 +77,30 @@ func Lucky_unlucky_number(RandomNumber int) (luckyNumber []int, unluckyNumber []
 
 func CheckGuess(userGuess int) { //ユーザーが選択数字から状態を更新する
 	GameStatus.NumberOfLife--
-	if userGuess == GameStatus.RandomNumber{
+	if userGuess == GameStatus.RandomNumber{//ゲームがクリアされた時
 		GameStatus.Clear = true
 		GameStatus.NumberOfLife++
-	} else  if userGuess < GameStatus.RandomNumber {
+	} else  if userGuess < GameStatus.RandomNumber {//予想値が答えより小さかった時
 		GameSentence.LastResult = "不正解！！"
 		GameSentence.LowOrHi = "小さすぎます。もっと大きい値です"
-	} else {
+	} else {                                        //予想値が答えより大きかった時
 		GameSentence.LastResult = "不正解！！"
 		GameSentence.LowOrHi = "大きすぎます。もっと小さい値です"
 	}
-	if StringInSlice(userGuess, GameStatus.LuckyNumber) {
+	if StringInSlice(userGuess, GameStatus.LuckyNumber) {//予想値がラッキーナンバーだった時
 		GameSentence.LastResult = "ラッキーナンバーです"
 		GameStatus.NumberOfLife++
 	}
-	if StringInSlice(userGuess, GameStatus.UnluckyNumber) {
+	if StringInSlice(userGuess, GameStatus.UnluckyNumber) {//予想値がアンラッキーナンバーだった時
 		GameSentence.LastResult = "アンラッキーナンバーです"
 		GameStatus.NumberOfLife--
 	}
-	if GameStatus.NumberOfLife<=0{
+	if GameStatus.NumberOfLife<=0{//ゲームオーバーになった時
 		GameStatus.Gameover = true
 	}
 	a := strconv.Itoa(userGuess)
-	GameStatus.CandidSlice = append(GameStatus.CandidSlice, a)
-	GameSentence.Candid = strings.Join(GameStatus.CandidSlice, " ")
+	GameStatus.CandidSlice = append(GameStatus.CandidSlice, a) 
+	GameSentence.Candid = strings.Join(GameStatus.CandidSlice, " ") //これまでの予想値をスライスから文字列に変換している
 	num := math.Max(0, float64(GameStatus.NumberOfLife))//数値が0以下にならないようにする
-	GameSentence.Life = strings.Repeat("♡", int(num))
+	GameSentence.Life = strings.Repeat("♡", int(num)) //ライフの数をからハートの文字列に変換している
 }

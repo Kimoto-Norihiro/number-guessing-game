@@ -22,7 +22,7 @@ func signup(w http.ResponseWriter, r *http.Request) {  //signup画面を出力
 			log.Println(err)
 		}
 		name := r.PostFormValue("name")
-		models.PlayedUser.Name = name
+		models.PlayedUser.Name = name //受け取った名前をUserのNameにする
 		http.Redirect(w, r, "/game", 302)
 	}
 }
@@ -40,15 +40,15 @@ func game_route(w http.ResponseWriter, r *http.Request) {//予想値を受け取
 
 		game.CheckGuess(guessnum)
 		if game.GameStatus.Clear {
-			models.PlayedUser.Score = game.GameStatus.NumberOfLife
+			models.PlayedUser.Score = game.GameStatus.NumberOfLife//Scoreを追加
 			models.PlayedUser.CreateUser()//Userを追加
 			topusers := models.GetTopUser()//Score上位10名のデータ
-			data := Data{NowUser: models.PlayedUser, TopUser: topusers}
+			data := Data{NowUser: models.PlayedUser, TopUser: topusers}//まとめたデータ
 			generateHTML(w, data, "layout", "clear")
-			game.StartGame()
+			game.StartGame()//ゲームが終了したので初期化
 		} else if game.GameStatus.Gameover {
 			generateHTML(w, nil, "layout", "gameover")
-			game.StartGame()
+			game.StartGame()//ゲームが終了したので初期化
 		} else {
 			generateHTML(w, game.GameSentence, "layout", "game")
 		}
