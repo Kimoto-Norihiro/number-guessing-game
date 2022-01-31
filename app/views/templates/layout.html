@@ -1,0 +1,30 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>数字当てゲーム</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  </head>
+
+  <body>
+    <div class = "container text-center">
+      <h1 class="text-white bg-primary">数字当てゲーム</h1>
+    </div>
+    <div class = "container text-start w-75">
+      <h2>ルール</h2>
+      <p>1 から 100 までの数字を当ててみて！<br>
+      ライフが0になるまでに当てられるかな？<br>
+      選んだ数字が答えより大きいか小さいかを表示します。<br>
+      ラッキーナンバーを選ぶとライフが回復<br>
+      アンラッキーナンバーを選ぶとライフが減るよ</p>
+    </div>
+
+    {{template "content" .}}
+    
+  </body>
+  <script src="/static/js/jquery-3.5.1.min.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+</html>
+{{end}}

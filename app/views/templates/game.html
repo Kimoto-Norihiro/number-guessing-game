@@ -1,0 +1,20 @@
+{{define "content"}}
+<div class = "container w-75">
+    <form class="form-signin center" fore="form" action="/game" method="post">
+        <h5>予想を入力してください</h5>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="number"  placeholder="guess number" required autofocus>
+            <button class="btn btn-outline-primary" type="submit" id="button-addon2">提出</button>
+        </div>
+    </form>
+</div>
+
+<div class="container w-75">
+    <p>残りライフ:{{.Life}}</p>    
+    {{ if ne .Candid ""}}
+        <p>これまでの予想：{{ .Candid }}</p>
+    {{ end }}
+    <p>{{ .LastResult }}</p>
+    <p>{{ .LowOrHi }}</p>
+</div>
+{{end}}
