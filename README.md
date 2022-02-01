@@ -10,7 +10,7 @@
 # DEMO
 以下のリンクからこのゲームが遊べます。 
 
-https://gentle-sands-90094.herokuapp.com/game
+https://gentle-sands-90094.herokuapp.com
 
 # Features
 golangの勉強を最近していたので、golangで記述しました。参考(まだ途中です。）は以下に載せます。
